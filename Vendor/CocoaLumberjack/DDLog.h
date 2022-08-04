@@ -100,17 +100,17 @@
 #define LOG_MAYBE(async, lvl, flg, ctx, fnct, frmt, ...) \
   do { if(lvl & flg) LOG_MACRO(async, lvl, flg, ctx, nil, fnct, frmt, ##__VA_ARGS__); } while(0)
 
-#define LOG_OBJC_MAYBE(async, lvl, flg, ctx, frmt, ...) \
+#define HTTP_LOG_OBJC_MAYBE(async, lvl, flg, ctx, frmt, ...) \
              LOG_MAYBE(async, lvl, flg, ctx, sel_getName(_cmd), frmt, ##__VA_ARGS__)
 
 #define LOG_C_MAYBE(async, lvl, flg, ctx, frmt, ...) \
           LOG_MAYBE(async, lvl, flg, ctx, __FUNCTION__, frmt, ##__VA_ARGS__)
 
-#define  SYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-              LOG_OBJC_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+#define  SYNC_HTTP_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
+              HTTP_LOG_OBJC_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
-#define ASYNC_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
-              LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
+#define ASYNC_HTTP_LOG_OBJC_MAYBE(lvl, flg, ctx, frmt, ...) \
+              HTTP_LOG_OBJC_MAYBE(YES, lvl, flg, ctx, frmt, ##__VA_ARGS__)
 
 #define  SYNC_LOG_C_MAYBE(lvl, flg, ctx, frmt, ...) \
               LOG_C_MAYBE( NO, lvl, flg, ctx, frmt, ##__VA_ARGS__)
@@ -228,10 +228,10 @@
 #define LOG_ASYNC_INFO    (YES && LOG_ASYNC_ENABLED)
 #define LOG_ASYNC_VERBOSE (YES && LOG_ASYNC_ENABLED)
 
-#define DDLogError(frmt, ...)   LOG_OBJC_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
-#define DDLogWarn(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
-#define DDLogInfo(frmt, ...)    LOG_OBJC_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
-#define DDLogVerbose(frmt, ...) LOG_OBJC_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
+#define DDLogError(frmt, ...)   HTTP_LOG_OBJC_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
+#define DDLogWarn(frmt, ...)    HTTP_LOG_OBJC_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
+#define DDLogInfo(frmt, ...)    HTTP_LOG_OBJC_MAYBE(LOG_ASYNC_INFO,    ddLogLevel, LOG_FLAG_INFO,    0, frmt, ##__VA_ARGS__)
+#define DDLogVerbose(frmt, ...) HTTP_LOG_OBJC_MAYBE(LOG_ASYNC_VERBOSE, ddLogLevel, LOG_FLAG_VERBOSE, 0, frmt, ##__VA_ARGS__)
 
 #define DDLogCError(frmt, ...)   LOG_C_MAYBE(LOG_ASYNC_ERROR,   ddLogLevel, LOG_FLAG_ERROR,   0, frmt, ##__VA_ARGS__)
 #define DDLogCWarn(frmt, ...)    LOG_C_MAYBE(LOG_ASYNC_WARN,    ddLogLevel, LOG_FLAG_WARN,    0, frmt, ##__VA_ARGS__)
